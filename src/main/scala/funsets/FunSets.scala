@@ -1,6 +1,7 @@
 package funsets
 
 import scala.annotation.tailrec
+import scala.collection.mutable.ListBuffer
 
 /**
  * 2. Purely Functional Sets.
@@ -87,10 +88,20 @@ object FunSets {
     }
 
   def toSet(ints: List[Int]): FunSet =
-    ???
+    ints.toSet
 
   def toList(set: FunSet): List[Int] =
-    ??? //TODO : (optional) convert a Set to a List
+    {
+      val liste = new ListBuffer[Int]()
+      def iter(a: Int): ListBuffer[Int] = {
+        if (contains(set, a))
+          liste += a
+        else if (a < -bound) liste
+        else iter(a - 1)
+      }
+      iter(bound)
+      liste.toList
+    }
 
   /**
    * Displays the contents of a set
